@@ -1,8 +1,8 @@
-// sum.test.js
 const expect = require('chai').expect;
 
-const sum = (a, b) => a + b;
-
-it('suma de 1 + 2 es igual a 3', () => {
-  expect(sum(1, 2)).toBe(3);
+describe('Prueba de suma', () => {
+    it('suma de 1 + 2 es igual a 3', () => {
+        const resultado = 1 + 2;
+        expect(resultado).to.equal(3); // Correcto
+    });
 });
