@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -35,6 +36,17 @@ pipeline {
                 }
             }
         }
+
+        // Nueva etapa de prueba
+        stage('Nueva Prueba') {
+            steps {
+                script {
+                  
+                    echo 'Ejecutando la nueva prueba'
+                    
+                }
+            }
+        }
     }
 
     post {
@@ -47,4 +59,3 @@ pipeline {
         }
     }
 }
-
