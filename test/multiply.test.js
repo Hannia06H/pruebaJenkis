@@ -1,6 +1,6 @@
 // multiply.test.js
 const assert = require('chai').assert;
-const multiply = require('./multiply');
+const multiply = require('./src/multiply');
 
 describe('Test de la función multiply', function() {
   it('Debería multiplicar 2 y 3 para obtener 6', function() {
