@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clonar Repositorio') {
             steps {
-                git 'https://github.com/Hannia06H/pruebaJenkis.git'
+                git branch: 'main', url: 'https://github.com/Hannia06H/pruebaJenkis.git'
             }
         }
 
@@ -26,6 +26,18 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            echo 'Las pruebas se ejecutaron correctamente.'
+        }
+
+        failure {
+            echo 'Hubo un error al ejecutar las pruebas.'
+        }
+    }
+}
+
 
     post {
         success {
