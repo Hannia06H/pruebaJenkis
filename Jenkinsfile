@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -41,9 +40,15 @@ pipeline {
         stage('Nueva Prueba') {
             steps {
                 script {
-                  
                     echo 'Ejecutando la nueva prueba'
-                    
+
+                    // Aquí puedes agregar la nueva prueba que deseas ejecutar.
+                    // Por ejemplo, probar si un archivo específico existe después de la instalación.
+                    if (fileExists('multiply.js')) {
+                        echo 'El archivo multiply.js existe.'
+                    } else {
+                        error 'El archivo multiply.js no se encuentra.'
+                    }
                 }
             }
         }
@@ -59,3 +64,4 @@ pipeline {
         }
     }
 }
+
