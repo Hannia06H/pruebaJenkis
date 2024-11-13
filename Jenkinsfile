@@ -8,18 +8,7 @@ pipeline {
             }
         }
 
-        stage('Listar Archivos') {
-            steps {
-                script {
-                    // Lista los archivos en el directorio de trabajo para verificar que los archivos estén presentes
-                    if (isUnix()) {
-                        sh 'ls -R'  // Para Unix
-                    } else {
-                        bat 'dir /s'  // Para Windows
-                    }
-                }
-            }
-        }
+      
 
         stage('Instalar Dependencias') {
             steps {
