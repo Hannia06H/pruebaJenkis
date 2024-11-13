@@ -11,8 +11,14 @@ pipeline {
         stage('Instalar Dependencias') {
             steps {
                 script {
-                    // Instalar dependencias usando npm
-                    sh 'npm install'
+                    // Verifica si el sistema operativo es Unix o Windows
+                    if (isUnix()) {
+                        // Para sistemas Unix (Linux/macOS)
+                        sh 'npm install'
+                    } else {
+                        // Para sistemas Windows
+                        bat 'npm install'
+                    }
                 }
             }
         }
@@ -20,8 +26,12 @@ pipeline {
         stage('Ejecutar Pruebas') {
             steps {
                 script {
-                    // Ejecutar las pruebas
-                    sh 'npm test'
+                    // Ejecutar las pruebas dependiendo del sistema operativo
+                    if (isUnix()) {
+                        sh 'npm test'
+                    } else {
+                        bat 'npm test'
+                    }
                 }
             }
         }
