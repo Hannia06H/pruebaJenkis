@@ -8,6 +8,19 @@ pipeline {
             }
         }
 
+        stage('Listar Archivos') {
+            steps {
+                script {
+                    // Lista los archivos en el directorio de trabajo para verificar que los archivos estén presentes
+                    if (isUnix()) {
+                        sh 'ls -R'  // Para Unix
+                    } else {
+                        bat 'dir /s'  // Para Windows
+                    }
+                }
+            }
+        }
+
         stage('Instalar Dependencias') {
             steps {
                 script {
@@ -26,17 +39,24 @@ pipeline {
         stage('Ejecutar Pruebas') {
             steps {
                 script {
-                    // Ejecutar las pruebas dependiendo del sistema operativo
-                    if (isUnix()) {
-                        sh 'npm test'
+                    // Verifica si los archivos existen antes de ejecutar las pruebas
+                    echo 'Verificando existencia de los archivos necesarios...'
+
+                    if (fileExists('test/multiply.test.js') && fileExists('src/multiply.js')) {
+                        echo 'Los archivos existen, ejecutando las pruebas.'
+                        // Ejecutar las pruebas dependiendo del sistema operativo
+                        if (isUnix()) {
+                            sh 'npm test'
+                        } else {
+                            bat 'npm test'
+                        }
                     } else {
-                        bat 'npm test'
+                        error 'Los archivos necesarios no existen en el repositorio.'
                     }
                 }
             }
         }
 
-        // Nueva etapa de prueba
         stage('Nueva Prueba') {
             steps {
                 script {
@@ -44,10 +64,10 @@ pipeline {
 
                     // Aquí puedes agregar la nueva prueba que deseas ejecutar.
                     // Por ejemplo, probar si un archivo específico existe después de la instalación.
-                    if (fileExists('multiply.js')) {
-                        echo 'El archivo multiply.js existe.'
+                    if (fileExists('test/multiply.test.js')) {
+                        echo 'El archivo multiply.test.js existe.'
                     } else {
-                        error 'El archivo multiply.js no se encuentra.'
+                        error 'El archivo multiply.test.js no se encuentra.'
                     }
                 }
             }
@@ -64,4 +84,5 @@ pipeline {
         }
     }
 }
+
 
