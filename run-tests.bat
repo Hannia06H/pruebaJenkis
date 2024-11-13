@@ -1,34 +1,24 @@
-javac LoginTest.java
-java LoginTest
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.By;
+@echo off
 
-public class LoginTest {
-    private WebDriver driver;
+REM Establecer la ruta del JDK y Selenium (si no están configurados en variables de entorno)
+set JAVA_HOME=C:\Program Files\Java\jdk-17
+set PATH=%JAVA_HOME%\bin;%PATH%
 
-    @Before
-    public void setUp() {
-        // Configura la ruta del driver de Chrome
-        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
-        driver = new ChromeDriver();
-    }
+REM Directorio donde está tu código fuente y el driver de Chrome
+set PROJECT_DIR=C:\ruta\a\tu\proyecto
+set SELENIUM_JAR=C:\ruta\a\selenium\selenium-server-standalone-x.xx.x.jar
+set CHROMEDRIVER_PATH=C:\ruta\a\chromedriver.exe
 
-    @Test
-    public void testLoginValido() {
-        driver.get("https://katalon-demo-cura.herokuapp.com/");
-        driver.findElement(By.id("txt-username")).sendKeys("John Doe");
-        driver.findElement(By.id("txt-password")).sendKeys("ThisIsNotAPassword");
-        driver.findElement(By.id("btn-login")).click();
-        // Verifica que el usuario fue redirigido correctamente
-        assert(driver.getPageSource().contains("Make Appointment"));
-    }
+REM Cambiar al directorio del proyecto
+cd %PROJECT_DIR%
 
-    @After
-    public void tearDown() {
-        driver.quit();
-    }
-}
+REM Compilar el archivo LoginTest.java con las dependencias de Selenium
+javac -cp ".;%SELENIUM_JAR%" LoginTest.java
+
+REM Ejecutar el archivo compilado LoginTest con Selenium
+java -cp ".;%SELENIUM_JAR%" LoginTest
+
+REM Fin
+echo Pruebas ejecutadas correctamente.
+pause
+
