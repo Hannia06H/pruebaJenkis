@@ -38,14 +38,3 @@ pipeline {
     }
 }
 
-
-    post {
-        success {
-            echo 'Las pruebas se ejecutaron correctamente.'
-        }
-
-        failure {
-            echo 'Hubo un error al ejecutar las pruebas.'
-        }
-    }
-}
